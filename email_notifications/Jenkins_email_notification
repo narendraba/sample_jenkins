@@ -1,5 +1,5 @@
 pipeline{
-    angent{
+    agent{
         docker {image 'node:16-alpine'}
     }
 
@@ -38,6 +38,7 @@ pipeline{
                 sh 'echo "Deploying application..."'
             }
         }
+    }
     
     post {
         success {
@@ -52,10 +53,4 @@ pipeline{
                 body: "The build of you project  has failed. Check Jenkins for details."
         }
     }
-        
-
-
-    }
-
-
 }
