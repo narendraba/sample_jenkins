@@ -1,0 +1,58 @@
+pipeline{
+    agent{
+        docker {image 'node:16-alpine'}
+    }
+
+    stages{
+        stage("checkout"){
+            steps{
+                echo 'Cloning the Git repository...'
+
+            }
+        }
+
+        stage("Build"){
+            steps{
+                echo 'Building the project...'
+                // Example shell command for a build, adjust according to your project type (e.g., Maven, Gradle, npm)
+                sh 'echo "Running build command..."'
+                // For a Maven project, you might use: 
+                // sh 'mvn clean install'
+            }
+        }
+
+        stage("Test"){
+            steps{
+                echo 'Running tests...'
+                // Example test command, adjust to your setup (e.g., unit tests)
+                sh 'echo "Running test cases..."'
+                // For a Node.js project with npm, you might use:
+                // sh 'npm test'
+                echo "Some testcases are failing here"
+                some test cases are failed here
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying the project...'
+                // Example deploy command, adjust based on your environment
+                sh 'echo "Deploying application..."'
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+
+        failure {
+            echo 'Pipeline failed!'
+            // Send notification (you can configure email, Slack, etc.)
+            mail to: 'ballipallinarendra@gmail.com',
+                subject: "Build Failed on your project ",
+                body: "The build of you project  has failed. Check Jenkins for details."
+        }
+    }
+}
