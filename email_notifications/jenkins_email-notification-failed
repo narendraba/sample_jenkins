@@ -54,5 +54,4 @@ pipeline{
                 body: "The build of you project  has failed. Check Jenkins for details."
         }
     }
-    
 }
