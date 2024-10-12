@@ -1,0 +1,48 @@
+pipeline {
+    agent any{
+        docker {image 'node:16-alpine'}
+    }
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                // Add your build steps here
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                // Simulate a test failure
+                sh 'exit 1' // This command will fail
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying...'
+                // Add your deployment steps here
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline completed successfully.'
+        }
+        failure {
+            echo 'Pipeline failed!'
+            // Send email notification on failure
+            emailext (
+                subject: "Jenkins Job - Failed",
+                body: """<p>Job: Testing email <br>
+                          Build Number: ${env.BUILD_NUMBER} <br>
+                          Status: Failed <br>
+                          Check console output at """,
+                to: 'ballipallinarendra@gmail.com'
+            )
+        }
+    }
+}
+
